@@ -1,0 +1,21 @@
+#!/bin/rc
+
+rfork ne
+
+if(! ~ $1 '') {
+	if(test -e $1) {
+		riobgimage = $1
+	}
+}
+if not {
+	riobgimage = ''
+}
+
+
+if(! ~ $riobgimage '') {
+	make-background $1
+}
+if (test -e $home/lib/rio.theme) {
+	cat $home/lib/rio.theme
+}
+echo ''

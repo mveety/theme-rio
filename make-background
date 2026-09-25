@@ -1,0 +1,16 @@
+#!/bin/rc
+
+if(~ $1 '') {
+	echo >[1=2] 'usage: make-background file'
+	exit 'usage'
+}
+
+if(! test -e $1) {
+	echo >[1=2] 'error: '^$1^' not found'
+	exit 'file not found'
+}
+
+screensize = `{cat /dev/screen | awk '{print $4," ",$5; exit}'}
+
+resize -x $screensize(1) -y $screensize(2) $1 > /tmp/$sysname^-background.bit
+echo rioback /tmp/$sysname^-background.bit
