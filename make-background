@@ -17,5 +17,10 @@ if(! test -e $1) {
 
 screensize = `{cat /dev/screen | awk '{print $4," ",$5; exit}'}
 
-resize -x $screensize(1) -y $screensize(2) $1 > /tmp/$sysname^-background.bit
+oldsrcfile = `{cat /tmp/$sysname^-background.srcfile >[2]/dev/null}
+if(! ~ $1 $oldsrcfile){
+	resize -x $screensize(1) -y $screensize(2) $1 > /tmp/$sysname^-background.bit
+	echo $1 > /tmp/$sysname^-background.srcfile
+}
+
 echo rioback /tmp/$sysname^-background.bit
